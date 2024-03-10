@@ -8,7 +8,7 @@ module.exports = {
       'pos-primary' : '#8919FA',
       'pos-secondary' : '#E3C7FF',
       // 'accent' : '#A5DC86',
-      'pos-pos-white' : '#FFFFFF',
+      'pos-white' : '#FFFFFF',
       'pos-neutral' : '#D9D9D9',
       'pos-success' : '#A5DC86',
       'pos-error' : '#F27474',
