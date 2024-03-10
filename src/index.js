@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Receipt from './pages/receipt/Receipt';
 import PayCard from './pages/method-pay/PayCard';
 import SelectMenu from './pages/select-menu/SelectMenu';
-
+import Home from './pages/Home/Home';
 
 document.body.className = 'font-Kanit'
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,7 +14,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index path='/' element={<SelectMenu />} />
+
+        <Route index path='/' element={<Home />} />
+        <Route exact path='/selectMenu' element={<SelectMenu />} />
         <Route exact path='/receipt' element={<Receipt />} />
         <Route exact path='/pay-card' element={<PayCard />} />
       </Routes>
