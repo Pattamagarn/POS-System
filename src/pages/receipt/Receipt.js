@@ -55,7 +55,7 @@ const Receipt = () => {
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                navigate('/menu')
+                navigate('/')
             }
 
         })

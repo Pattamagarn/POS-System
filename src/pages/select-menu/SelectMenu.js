@@ -66,11 +66,11 @@ const SelectMenu = () => {
     return (
         <div>
             <MetaHeader title='SelectMenu' />
-            <div className="flex border h-full bg-pos-primary">
+            <div className="flex h-full border bg-pos-primary">
                 <div className="flex-none w-1/5 h-full max-h-full">
-                    <div className="avatar flex justify-center mt-10">
+                    <div className="flex justify-center mt-10 avatar">
                         <div className="w-48 rounded-full">
-                            <img src={require('../../image/logo1.jpg')} />
+                            <img src={require('../../image/logo2.jpg')} />
                         </div>
                     </div>
                     <div className="flex justify-center mt-10 bg-pos-secondary">
@@ -81,7 +81,7 @@ const SelectMenu = () => {
                 </div>
                 <div className="flex flex-col items-center py-10 w-4/5 h-full max-h-full bg-[#FFFFFF]">
                     <div className="text-3xl text-[#000000]"> รายการสินค้า </div>
-                    <div className="flex max-w-3xl w-full">
+                    <div className="flex w-full max-w-3xl">
                         <table className="table">
                             <thead>
                                 <tr>
@@ -112,7 +112,7 @@ const SelectMenu = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className="flex w-full  gap-4 justify-end px-52 py-10">
+                    <div className="flex justify-end w-full gap-4 py-10 px-52">
                         <div className="btn flex w-24 justify-center bg-pos-error border-none text-[#000000] hover:bg-pos-error/80"> ย้อนกลับ </div>
                         <Link to='/receipt'><div className="btn flex w-24 justify-center bg-pos-success border-none text-[#000000] hover:bg-pos-success/80"> ยืนยัน </div></Link>
                     </div>
