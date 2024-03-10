@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Receipt from './pages/receipt/Receipt';
 import PayCard from './pages/method-pay/PayCard';
 import PayCash from './pages/method-pay/PayCash';
+import SelectMenu from './pages/select-menu/SelectMenu';
 
 
 document.body.className = 'font-Kanit'
@@ -14,9 +15,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index path='/' element={<Receipt />} />
+        <Route index path='/' element={<SelectMenu />} />
         <Route exact path='/pay-cash' element={<PayCash />} />
         <Route exact path='/pay-card' element={<PayCard />} />
+        <Route exact path='/receipt' element={<Receipt />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
