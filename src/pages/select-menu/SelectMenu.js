@@ -1,4 +1,4 @@
-import MetaHeader from "../../components/MetaHeader";
+import MetaHeader from '../../components/MetaHeader/MetaHeader';
 import { useEffect, useState } from 'react';
 import { useNavigate,Link } from "react-router-dom";
 

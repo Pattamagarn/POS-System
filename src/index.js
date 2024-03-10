@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Receipt from './pages/receipt/Receipt';
 import PayCard from './pages/method-pay/PayCard';
-import PayCash from './pages/method-pay/PayCash';
 import SelectMenu from './pages/select-menu/SelectMenu';
 
 
@@ -16,9 +15,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route index path='/' element={<SelectMenu />} />
-        <Route exact path='/pay-cash' element={<PayCash />} />
-        <Route exact path='/pay-card' element={<PayCard />} />
         <Route exact path='/receipt' element={<Receipt />} />
+        <Route exact path='/pay-card' element={<PayCard />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
