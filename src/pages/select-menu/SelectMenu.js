@@ -113,7 +113,7 @@ const SelectMenu = () => {
                         </table>
                     </div>
                     <div className="flex justify-end w-full gap-4 py-10 px-52">
-                        <div className="btn flex w-24 justify-center bg-pos-error border-none text-[#000000] hover:bg-pos-error/80"> ย้อนกลับ </div>
+                        <Link to='/'><div className="btn flex w-24 justify-center bg-pos-error border-none text-[#000000] hover:bg-pos-error/80"> ย้อนกลับ </div></Link>
                         <Link to='/receipt'><div className="btn flex w-24 justify-center bg-pos-success border-none text-[#000000] hover:bg-pos-success/80"> ยืนยัน </div></Link>
                     </div>
                 </div>

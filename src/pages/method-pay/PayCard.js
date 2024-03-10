@@ -19,46 +19,46 @@ const defaultOptions = {
 const PayCard = ({ point }) => {
 
     const navigate = useNavigate()
-    const [user,setUser] = useState([])
+    // const [user,setUser] = useState([])
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API}/retrieveDataNisit`)
-        .then((response) => {
-            if(response.status){
-                setUser(response.data)
-                // console.log(response.data)
-            }
-        })
-    },[])
+    // useEffect(() => {
+    //     axios.get(`${process.env.REACT_APP_API}/retrieveDataNisit`)
+    //     .then((response) => {
+    //         if(response.status){
+    //             // setUser(response.data)
+    //             // console.log(response.data)
+    //         }
+    //     })
+    // },[])
     const totalPrice = 1
-    // const user = [
-    //     {
+    const user = [
+        {
 
-    //         "id": "6430300854",
-    //         "name": "ปัฐมกาญจน์ โอสถ",
-    //         "cash": "1000.00",
-    //         "point": "150"
-    //     },
-    //     {
+            "id": "6430300854",
+            "name": "ปัฐมกาญจน์ โอสถ",
+            "cash": "1000.00",
+            "point": "150"
+        },
+        {
 
-    //         "id": "6430300579",
-    //         "name": "ปัฐมกาญจน์ โอสถ",
-    //         "cash": "1000.00",
-    //         "point": "150"
-    //     },
-    //     {
-    //         "id": "6430300595",
-    //         "name": "พงศธร อนุชิตดัสกร",
-    //         "cash": "1000.00",
-    //         "point": "150"
-    //     },
-    // ]
-    const idCard = "6430300172"
+            "id": "6430300579",
+            "name": "ปัฐมกาญจน์ โอสถ",
+            "cash": "1000.00",
+            "point": "150"
+        },
+        {
+            "id": "6430300595",
+            "name": "พงศธร อนุชิตดัสกร",
+            "cash": "1000.00",
+            "point": "150"
+        },
+    ]
+    const idCard = "6430300579"
     const [scan, setScan] = useState(false)
     const [success, setSuccess] = useState(false)
     const [money, setMoney] = useState(125)
 
-    useEffect(() => { })
+
 
     const handleNoUser = () => {
         Swal.fire({
@@ -98,34 +98,34 @@ const PayCard = ({ point }) => {
     }
 
     const handlePayMent = () => {
-        axios.post(`${process.env.REACT_APP_API}/updateDataNisit`,{
-            cash : totalPrice
-        })
-        .then((response) => {
-            if(response.status) {
-                if(response.data === "Not enough money"){
-                    Swal.fire({
-                        title: 'ยอดเงินของคุณไม่พอ',
-                        icon: 'error',
-                        showCancelButton: false,
-                        confirmButtonColor: '#3FC3EE',
+    //     axios.post(`${process.env.REACT_APP_API}/updateDataNisit`,{
+    //         cash : totalPrice
+    //     })
+    //     .then((response) => {
+    //         if(response.status) {
+    //             if(response.data === "Not enough money"){
+    //                 Swal.fire({
+    //                     title: 'ยอดเงินของคุณไม่พอ',
+    //                     icon: 'error',
+    //                     showCancelButton: false,
+    //                     confirmButtonColor: '#3FC3EE',
             
-                        cancelButtonColor: '#F27474',
-                        confirmButtonText: 'ตกลง',
-                    })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                            navigate('/')
-                        }
+    //                     cancelButtonColor: '#F27474',
+    //                     confirmButtonText: 'ตกลง',
+    //                 })
+    //                 .then((result) => {
+    //                     if (result.isConfirmed) {
+    //                         navigate('/')
+    //                     }
             
-                    })
-                }
-                else{
-                    setUser(response.data)
-                }
-            }
-        })
-        .catch((error) => {})
+    //                 })
+    //             }
+    //             else{
+    //                 setUser(response.data)
+    //             }
+    //         }
+    //     })
+    //     .catch((error) => {})
     }
     // console.log(user)
     return (

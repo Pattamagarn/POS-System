@@ -16,7 +16,7 @@ root.render(
       <Routes>
 
         <Route index path='/' element={<Home />} />
-        <Route exact path='/selectMenu' element={<SelectMenu />} />
+        <Route exact path='/select-menu' element={<SelectMenu />} />
         <Route exact path='/receipt' element={<Receipt />} />
         <Route exact path='/pay-card' element={<PayCard />} />
       </Routes>
