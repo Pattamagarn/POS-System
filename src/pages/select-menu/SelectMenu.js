@@ -1,6 +1,6 @@
 import MetaHeader from '../../components/MetaHeader/MetaHeader';
 import { useEffect, useState } from 'react';
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SelectMenu = () => {
 
@@ -46,6 +46,27 @@ const SelectMenu = () => {
 
     const [dataMenu, setDataMenu] = useState([]);
 
+    const selectedItems = dataMenu
+        .filter(item => item.count > 0)
+        .map(item => ({ name: item.name, count: item.count, cost: item.count * parseInt(item.price) }));
+
+    const itemsByName = selectedItems.reduce((acc, item) => {
+        acc[item.name] = acc[item.name] || { count: 0, sumCost: 0 };
+        acc[item.name].count += item.count;
+        acc[item.name].sumCost += item.cost;
+        return acc;
+    }, {});
+
+    //console.log(itemsByName);
+    const itemNames = Object.keys(itemsByName);
+    //console.log(itemNames);
+    Object.entries(itemsByName).forEach(([itemName, itemData]) => {
+        //console.log(`Count for ${itemName}: ${itemData.count}`);
+    });
+    Object.entries(itemsByName).forEach(([itemName, itemData]) => {
+        //console.log(`Count for ${itemName}: ${itemData.sumCost}`);
+    });
+
     useEffect(() => {
         setDataMenu(menu.map((value, index) => {
             return { ...value, index: index + 1, count: 0 };
@@ -61,7 +82,6 @@ const SelectMenu = () => {
             return newData;
         });
     };
-
 
     return (
         <div>
