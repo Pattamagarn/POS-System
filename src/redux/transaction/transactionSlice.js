@@ -1,16 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const INIT_DATA = []
+const initialState = {
+    product : {status:false}
+}
 
 const transactionSlice = createSlice({
     name:'product',
-    initialState : INIT_DATA,
+    initialState : initialState,
     reducers : {
         addProduct(state,action){
-            state.push({
-                product : action.payload.product,
-                amount : action.payload.amount
-            })
+            state.product = action.payload
+        },
+        incrementProduct(state,action){
+            console.log(action.payload)
+            state.product = action.payload +1
+        },
+        decrementProduct(state,action){
+            console.log(action.payload)
+            state.product = action.payload - 1
         },
         setTotalPrice(state,action){
             state.push({
@@ -21,6 +28,6 @@ const transactionSlice = createSlice({
     }
 })
 
-const {action,reducer} = transactionSlice
-export const {addProduct,setTotalPrice} = action
+const {actions,reducer} = transactionSlice
+export const {addProduct,setTotalPrice,incrementProduct,decrementProduct} = actions
 export default reducer

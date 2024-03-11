@@ -1,86 +1,121 @@
 import MetaHeader from '../../components/MetaHeader/MetaHeader';
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
+import { addProduct,incrementProduct,decrementProduct } from '../../redux/transaction/transactionSlice';
+import { setIsBooth } from '../../redux/transaction/boothSlice';
+import axios from 'axios';
 
 const SelectMenu = () => {
 
     const navigate = useNavigate()
-    const menu = [
-        {
-            "name": "ข้าวผัดกุ้ง",
-            "price": "50"
-        },
-        {
-            "name": "ข้าวขาหมู",
-            "price": "40"
-        },
-        {
-            "name": "ข้าวมันไก่",
-            "price": "40"
-        },
-        {
-            "name": "กระเพราหมูกรอบ",
-            "price": "50"
-        },
-        {
-            "name": "กระเพราทะเล",
-            "price": "50"
-        },
-        {
-            "name": "กระเพราหมู",
-            "price": "50"
-        },
-        {
-            "name": "คะน้าหมูกรอบ",
-            "price": "50"
-        },
-        {
-            "name": "หมูทอดกระเทียม",
-            "price": "40"
-        },
-        {
-            "name": "ไก่ทอดกระเทียม",
-            "price": "40"
-        }
-    ];
+    const isbooth = useSelector((state) => state.isbooth.isbooth)
+    const product = useSelector((state) => state.product.product)
+    const dispatch = useDispatch()
+    //     {
+    //         "name": "ข้าวผัดกุ้ง",
+    //         "price": "50"
+    //     },
+    //     {
+    //         "name": "ข้าวขาหมู",
+    //         "price": "40"
+    //     },
+    //     {
+    //         "name": "ข้าวมันไก่",
+    //         "price": "40"
+    //     },
+    //     {
+    //         "name": "กระเพราหมูกรอบ",
+    //         "price": "50"
+    //     },
+    //     {
+    //         "name": "กระเพราทะเล",
+    //         "price": "50"
+    //     },
+    //     {
+    //         "name": "กระเพราหมู",
+    //         "price": "50"
+    //     },
+    //     {
+    //         "name": "คะน้าหมูกรอบ",
+    //         "price": "50"
+    //     },
+    //     {
+    //         "name": "หมูทอดกระเทียม",
+    //         "price": "40"
+    //     },
+    //     {
+    //         "name": "ไก่ทอดกระเทียม",
+    //         "price": "40"
+    //     }
+    // ];
 
     const [dataMenu, setDataMenu] = useState([]);
-
-    const selectedItems = dataMenu
-        .filter(item => item.count > 0)
-        .map(item => ({ name: item.name, count: item.count, cost: item.count * parseInt(item.price) }));
-
-    const itemsByName = selectedItems.reduce((acc, item) => {
-        acc[item.name] = acc[item.name] || { count: 0, sumCost: 0 };
-        acc[item.name].count += item.count;
-        acc[item.name].sumCost += item.cost;
-        return acc;
-    }, {});
-
-    //console.log(itemsByName);
-    const itemNames = Object.keys(itemsByName);
-    //console.log(itemNames);
-    Object.entries(itemsByName).forEach(([itemName, itemData]) => {
-        //console.log(`Count for ${itemName}: ${itemData.count}`);
-    });
-    Object.entries(itemsByName).forEach(([itemName, itemData]) => {
-        //console.log(`Count for ${itemName}: ${itemData.sumCost}`);
-    });
+    const [dataPhoto, setDataPhoto] = useState([]);
+    const [amount, setAmount] = useState(0)
 
     useEffect(() => {
-        setDataMenu(menu.map((value, index) => {
-            return { ...value, index: index + 1, count: 0 };
-        }));
-    }, []);
+        axios.get(`${process.env.REACT_APP_API}retrieveShop`)
+            .then((response) => {
+                if (response.status) {
+                    let count = 0
+                    let check = false
+                    response.data.forEach(element => {
+                        if (element.ShopID == isbooth.item && !check) {
+                            check = true
+                        }
+                        else if (element.ShopID !== isbooth.item && !check) {
+                            count++
+                        }
+                    });
+                    setDataMenu(response.data[count].menu.map((value, index) => {
+                        return { ...value, index: index + 1, count: 0 }
+                    }))
+                    setDataPhoto(response.data[count].photoURL)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
 
-    const handleInputChange = (event, index) => {
-        let { value } = event.target;
-        value = parseInt(value) >= 0 ? parseInt(value) : 0;
-        setDataMenu(prevData => {
-            const newData = [...prevData];
-            newData[index].count = value;
-            return newData;
-        });
+
+    // const selectedItems = dataMenu
+    //     .filter(item => item.count > 0)
+    //     .map(item => ({ menu: item.menu, count: item.count, cost: item.count * parseInt(item.price) }));
+
+    // const itemsByName = selectedItems.reduce((acc, item) => {
+    //     acc[item.menu] = acc[item.menu] || { count: 0, sumCost: 0 };
+    //     acc[item.menu].count += item.count;
+    //     acc[item.menu].sumCost += item.cost;
+    //     return acc;
+    // }, {});
+
+    // // console.log(itemsByName);
+    // const itemNames = Object.keys(itemsByName);
+    // // console.log(itemNames);
+    // Object.entries(itemsByName).forEach(([itemName, itemData]) => {
+    //     // console.log(`Count for ${itemName}: ${itemData.count}`);
+    // });
+    // Object.entries(itemsByName).forEach(([itemName, itemData]) => {
+    //     //console.log(`Count for ${itemName}: ${itemData.sumCost}`);
+    // });
+
+    const handleBack = () => {
+        dispatch(setIsBooth({ status: false }))
+        navigate('/')
+    }
+
+    const handleNext = (data) => {
+        dispatch(addProduct({ status: true, data }))
+        navigate('/receipt')
+    }
+
+    const handleMinus = (amount) => {
+        dispatch(decrementProduct({status: true,amount}))
+    };
+    const handlePlus = (amount) => {
+        dispatch(incrementProduct({status: true,amount}))
     };
 
     return (
@@ -90,7 +125,7 @@ const SelectMenu = () => {
                 <div className="flex-none w-1/5 h-full max-h-full">
                     <div className="flex justify-center mt-10 avatar">
                         <div className="w-48 rounded-full">
-                            <img src={require('../../image/logo2.jpg')} />
+                            <img src={dataPhoto} />
                         </div>
                     </div>
                     <div className="flex justify-center mt-10 bg-pos-secondary">
@@ -113,18 +148,19 @@ const SelectMenu = () => {
                             <tbody>
                                 {dataMenu.map((value, index) => (
                                     <tr key={index}>
-                                        <td className="text-[#000000]">{value.name}</td>
+                                        <td className="text-[#000000]">{value.menu}</td>
                                         <td className="text-[#000000]">{value.price}</td>
                                         <td className="flex justify-end">
                                             <div>
-                                                <div className="btn btn-bordered hover:bg-pos-success/80 border-none bg-pos-success mx-2 text-[#000000]" onClick={() => handleInputChange({ target: { value: value.count - 1 } }, index)}> - </div>
+                                                <div className="btn btn-bordered hover:bg-pos-success/80 border-none bg-pos-success mx-2 text-[#000000]" onClick={() => {handleMinus(amount)}}> - </div>
                                                 <input
                                                     type="text"
-                                                    value={value.count}
                                                     readOnly
+                                                    defaultValue={amount}
+                                                    value={product.amount}
                                                     className="input input-bordered border-[#bababa] bg-[#FFFFFF] text-[#000000] w-14 h-10"
                                                 />
-                                                <div className="btn btn-bordered hover:bg-pos-error/80 border-none bg-pos-error mx-2 text-[#000000] " onClick={() => handleInputChange({ target: { value: value.count + 1 } }, index)}> + </div>
+                                                <div className="btn btn-bordered hover:bg-pos-error/80 border-none bg-pos-error mx-2 text-[#000000] " onClick={() => {handlePlus(amount)}}> + </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -133,8 +169,8 @@ const SelectMenu = () => {
                         </table>
                     </div>
                     <div className="flex justify-end w-full gap-4 py-10 px-52">
-                        <div className="btn flex w-24 justify-center bg-pos-error border-none text-[#000000] hover:bg-pos-error/80"> ย้อนกลับ </div>
-                        <Link to='/receipt'><div className="btn flex w-24 justify-center bg-pos-success border-none text-[#000000] hover:bg-pos-success/80"> ยืนยัน </div></Link>
+                        <div className="btn flex w-24 justify-center bg-pos-error border-none text-[#000000] hover:bg-pos-error/80" onClick={handleBack}> ย้อนกลับ </div>
+                        <div className="btn flex w-24 justify-center bg-pos-success border-none text-[#000000] hover:bg-pos-success/80" onClick={() => handleNext()}> ยืนยัน </div>
                     </div>
                 </div>
 

@@ -1,4 +1,4 @@
-import {combineReducers} from 'react-redux'
+import { combineReducers } from '@reduxjs/toolkit'
 import transactionSlice from './transaction/transactionSlice'
 import boothSlice from './transaction/boothSlice'
 

@@ -1,12 +1,18 @@
 import MetaHeader from "../../components/MetaHeader/MetaHeader"
 import Swal from "sweetalert2"
-// import { useState } from "react"
-import { useNavigate, } from "react-router-dom"
-import PayCard from "../method-pay/PayCard"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { addProduct } from '../../redux/transaction/transactionSlice';
+import { setIsBooth } from '../../redux/transaction/boothSlice';
 
 const Receipt = () => {
 
     const navigate = useNavigate()
+    const isbooth = useSelector((state) => state.isbooth.isbooth)
+    const product = useSelector((state) => state.product.product)
+    const dispatch = useDispatch()
+    
     const current = new Date()
     let date = current.getDate()
     let month = current.getMonth() + 1
@@ -16,22 +22,11 @@ const Receipt = () => {
     let second = current.getSeconds()
     const idShop = 123
     let idSale = 1
-    const menu = [
-    {
-        "food": "ข้าวผัดกุ้ง",
-        "amount": "2",
-        "cost": "50.00"
-    },
-    {
-        "food": "ข้าวขาหมู",
-        "amount": "2",
-        "cost": "40.50"
-    },
-    {
-        "food": "ข้าวมันไก่",
-        "amount": "1",
-        "cost": "40.00"
-    }]
+    const menu = Object.keys(product.data)
+
+    
+    
+
     const totalPay = "261.00"
     const point = "4"
     if (date < 10) date = '0' + date
@@ -55,13 +50,14 @@ const Receipt = () => {
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
             if (result.isConfirmed) {
-                navigate('/')
+                navigate('/select-menu')
             }
 
         })
 
     }
-
+    console.log(product.data)
+    console.log(Object.keys(product.data))
     const handleNext = () => {
         navigate('/pay-card')
     }
@@ -73,7 +69,7 @@ const Receipt = () => {
                 <div className="flex flex-col items-center w-full h-full mx-20 my-20 rounded-box bg-pos-white" >
                     <div className="flex flex-col items-center my-5 ">
                         <div className="flex justify-between w-96 ">
-                            <span className="text-3xl text-pos-primary">รหัสร้าน {idShop}</span>
+                            <span className="text-3xl text-pos-primary">รหัสร้าน {isbooth.item}</span>
                             <span className="text-3xl text-pos-primary"> เลขที่ #{idSale}</span>
                         </div>
                         <div className="flex justify-between w-[28rem] ">
@@ -91,12 +87,12 @@ const Receipt = () => {
                         </div>
                         <div className='h-1 mx-10 my-1 border-none divider bg-pos-primary' />
                         <div className="my-5">
-                            {menu.map((value) => (
+                            {Object.entries(menu).forEach(([valueName,valueIndex]) => (
                                 <div>
                                     <div className="flex justify-between w-full px-20 py-2">
-                                        <p className="text-2xl text-pos-primary">{value.food}</p>
-                                        <p className="text-2xl text-pos-primary">{value.amount}</p>
-                                        <p className="text-2xl text-pos-primary">{value.cost} บาท</p>
+                                        <p className="text-2xl text-pos-primary">{valueName}</p>
+                                        <p className="text-2xl text-pos-primary">{valueIndex.count}</p>
+                                        <p className="text-2xl text-pos-primary">{} บาท</p>
                                     </div>
                                 </div>
 

@@ -9,11 +9,12 @@ const boothSlice = createSlice({
     initialState: initialState,
     reducers:{
         setIsBooth(state,action){
+            console.log(action.payload)
             state.isbooth = action.payload
         }
     }
 })
 
-const { action,reducer} = boothSlice
-export const { setIsBooth } = action
+const { actions,reducer} = boothSlice
+export const { setIsBooth } = actions
 export default reducer
