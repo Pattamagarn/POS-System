@@ -11,20 +11,6 @@ const transactionSlice = createSlice({
         addProduct(state,action){
             state.product = action.payload
         },
-        incrementProduct(state,action){
-            console.log(action.payload)
-            state.product = action.payload +1
-        },
-        decrementProduct(state,action){
-            console.log(action.payload)
-            state.product = action.payload - 1
-        },
-        setTotalPrice(state,action){
-            state.push({
-                totalPrice : action.payload.totalPrice,
-                point : action.payload.point,
-            })
-        }
     }
 })
 

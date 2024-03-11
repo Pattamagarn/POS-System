@@ -1,18 +1,17 @@
 import MetaHeader from "../../components/MetaHeader/MetaHeader"
 import Swal from "sweetalert2"
-import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { addProduct } from '../../redux/transaction/transactionSlice';
-import { setIsBooth } from '../../redux/transaction/boothSlice';
 
 const Receipt = () => {
 
     const navigate = useNavigate()
     const isbooth = useSelector((state) => state.isbooth.isbooth)
     const product = useSelector((state) => state.product.product)
-    const dispatch = useDispatch()
-    
+    const menu = Object.entries(product.data)
+    const totalPay = product.pay
+
+
     const current = new Date()
     let date = current.getDate()
     let month = current.getMonth() + 1
@@ -20,15 +19,8 @@ const Receipt = () => {
     let hours = current.getHours()
     let minute = current.getMinutes()
     let second = current.getSeconds()
-    const idShop = 123
     let idSale = 1
-    const menu = Object.keys(product.data)
-
-    
-    
-
-    const totalPay = "261.00"
-    const point = "4"
+    const point = totalPay / 5
     if (date < 10) date = '0' + date
     if (month < 10) month = '0' + month
     if (hours < 10) hours = '0' + hours
@@ -56,8 +48,8 @@ const Receipt = () => {
         })
 
     }
-    console.log(product.data)
-    console.log(Object.keys(product.data))
+
+    
     const handleNext = () => {
         navigate('/pay-card')
     }
@@ -82,21 +74,32 @@ const Receipt = () => {
                     <div className="flex flex-col w-full h-full shadow-inner rounded-3xl shadow-pos-secondary">
                         <div className="flex justify-between w-full px-20 my-5">
                             <span className="text-3xl text-pos-primary">รายการ</span>
+
                             <span className="text-3xl text-pos-primary">จำนวน</span>
+
                             <span className="text-3xl text-pos-primary">ราคา</span>
                         </div>
                         <div className='h-1 mx-10 my-1 border-none divider bg-pos-primary' />
                         <div className="my-5">
-                            {Object.entries(menu).forEach(([valueName,valueIndex]) => (
-                                <div>
+                            {menu.map((value, index) => (
+                                <div key={index}>
                                     <div className="flex justify-between w-full px-20 py-2">
-                                        <p className="text-2xl text-pos-primary">{valueName}</p>
-                                        <p className="text-2xl text-pos-primary">{valueIndex.count}</p>
-                                        <p className="text-2xl text-pos-primary">{} บาท</p>
+                                        <div className="flex justify-start w-full ">
+                                            <p className="text-2xl text-pos-primary">{value[0]}</p>
+                                        </div>
+                                        <div className="flex justify-center w-full ">
+                                            <p className="flex text-2xl text-pos-primary">{value[1].count}</p>
+                                        </div>
+                                        <div className="flex justify-end w-full ">
+                                            <p className="text-2xl text-pos-primary">{value[1].sumCost} บาท</p>
+                                        </div>
                                     </div>
                                 </div>
 
                             ))}
+
+
+
                         </div>
                         <div className='h-1 mx-10 my-1 border-none divider bg-pos-primary' />
                         <div className="pt-2">
@@ -109,15 +112,15 @@ const Receipt = () => {
                                 <p className="text-2xl text-pos-primary">{point} คะแนน</p>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div className="flex justify-center w-full h-full gap-4 py-5">
-                            <button className="btn w-[150px] bg-pos-error hover:bg-pos-error/80" onClick={handleBack}>ย้อนกลับ</button>
-                            <button className="btn w-[150px] bg-pos-success hover:bg-pos-success/80" onClick={handleNext}>จ่ายเงินผ่านบัตร</button>
+                        <button className="btn w-[150px] bg-pos-error hover:bg-pos-error/80" onClick={handleBack}>ย้อนกลับ</button>
+                        <button className="btn w-[150px] bg-pos-success hover:bg-pos-success/80" onClick={handleNext}>จ่ายเงินผ่านบัตร</button>
                     </div>
 
                 </div>
-                
+
 
             </div>
         </div>

@@ -9,7 +9,6 @@ const boothSlice = createSlice({
     initialState: initialState,
     reducers:{
         setIsBooth(state,action){
-            console.log(action.payload)
             state.isbooth = action.payload
         }
     }

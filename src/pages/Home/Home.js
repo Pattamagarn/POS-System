@@ -1,6 +1,3 @@
-import { Link } from "react-router-dom"
-// import burger from '../../image/burger.png'
-// import spaghetti from '../../image/Spaghetti.png'
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { setIsBooth } from "../../redux/transaction/boothSlice"
@@ -24,12 +21,7 @@ const Home = () => {
                 setShop(response.data)
             }
             else{
-                Swal.fire({
-                    title: 'คำเตือน',
-                    text: response.data,
-                    icon: 'warning',
-                    confirmButtonText: 'ตกลง'
-                })
+                alertWarning('คำเตือน',response.data,'ตกลง')
             }
         })
         .catch((error) => {})
@@ -38,12 +30,22 @@ const Home = () => {
         }
     },[])
 
+
+    const alertWarning = (title, text, confirmButtonText) => {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: 'warning',
+            confirmButtonText: confirmButtonText
+        })
+    }
+    
     const handleStore = (item) => {
         dispatch(setIsBooth({status: true,item}))
         navigate('/select-menu')
     }
     return (
-        <div className="h-screen py-10 text-white bg-pos-primary">
+        <div className="h-screen py-10 text-white bg-gradient-to-r from-pos-primary to-pos-secondary">
             <div className="flex h-full mx-40 shadow-inner rounded-box bg-pos-white" >
                 <div className="grid grid-flow-col grid-rows-1 gap-10 " >
                     {shop.map((item,index) => (
